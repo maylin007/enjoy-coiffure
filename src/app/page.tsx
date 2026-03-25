@@ -13,7 +13,7 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&q=80')" }}>
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/616036836_1230143142542672_5474286374494117945_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_ohc=g45bGH0R3aQQ7kNvwF_q228&_nc_oc=Ado8-4Fkx1R0O_RcDOtSKv3tXjKM_-udFVn0sIYl8J2RXF2oH9rRzokaYVdMZ7wotlQ&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=zQ8QSz0UpcILBr6CaMK1zQ&_nc_ss=7a32e&oh=00_AfwM4pvXjYFpw2wvS5VQFcIJRlQRgnMgK6XDKfL3sfAf2w&oe=69C8F77E')" }}>
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
@@ -68,7 +68,7 @@ export default function Home() {
       <section className="bg-light">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2">
           <div className="aspect-square lg:aspect-auto">
-            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&q=80" alt="Coupe femme" className="w-full h-full object-cover" />
+            <img src="https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/615979824_1230141982542788_2899818584884082388_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_ohc=2yHXgrn4D8oQ7kNvwGeFlYs&_nc_oc=Adok-nmHfFYIcUqWaDF0Cgdc6MEuA-CyI_f0oSkmfujwta1cWAfIua009wVeSobNFGo&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=zQ8QSz0UpcILBr6CaMK1zQ&_nc_ss=7a32e&oh=00_AfxrQzOYW9Zkzsacky7O1CE2XsJ700O8T2QYhVpfsirzaA&oe=69C8FADC" alt="Lissage et couleur" className="w-full h-full object-cover" />
           </div>
           <AnimatedSection className="flex items-center px-8 lg:px-20 py-20">
             <div>
@@ -94,6 +94,36 @@ export default function Home() {
             <p className="text-white/70 text-base font-light mb-8">Passez quand vous voulez, on s&apos;occupe de vous.</p>
             <Link href="/salons" className="inline-block bg-white text-brand px-8 py-4 text-[13px] tracking-wider uppercase transition-all duration-300 hover:bg-light">Trouver le salon le plus proche</Link>
           </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Réalisations */}
+      <section className="py-28 px-6">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection>
+            <div className="text-center mb-20">
+              <p className="text-[11px] tracking-[0.3em] uppercase text-accent mb-4">Nos réalisations</p>
+              <h2 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-light text-dark">Le talent de nos coiffeurs</h2>
+            </div>
+          </AnimatedSection>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
+            {[
+              { src: "https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/650904696_1272734904950162_1352880729413638463_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=13d280&_nc_ohc=02K9q-lc5z0Q7kNvwFfxwfS&_nc_oc=AdqFnmE0Z20bfXXEuLrsUcBIVjxUq0cEo6j9BFE-JI78lsedqEImH1IpMPYHyGOEFXk&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=uqOfKpUldCZJPq4L-JIa1Q&_nc_ss=7a32e&oh=00_AfyJZE3ffwMG6WrKWRMjd1peGnBLzrwfbBhZgyYsEfzM2Q&oe=69C91D76", alt: "Séance rattrapage - après" },
+              { src: "https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/603972697_1210505211173132_5214834717041802570_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=13d280&_nc_ohc=AHj5sdrlqzEQ7kNvwGy8hm9&_nc_oc=Adr_4dBjtjG_Jl_8zDj0WnmCX73_47YS4joCpDuCyCK49QlURJ_-k1LsWZ-cdLO9yBM&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=RoLwtKT6AG0HkL96oSrEDQ&_nc_ss=7a32e&oh=00_AfyqRkLVanwf1unp5o79A-SHR2eJe5qtL0x30q8fgsCLPQ&oe=69C9021B", alt: "Coupe + couleur violet" },
+              { src: "https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/644456835_1261514436072209_7798624875715402619_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_ohc=IwWZWMmZ23cQ7kNvwHtTdz8&_nc_oc=AdrNOP1dqi2O4m0Zyil0ff8_XBIEfl2ebnKUUI02OZZbcS_UrIhELUf3x5mXCjhvlgg&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=ySWKjBuFTtnkxA27_6vMqA&_nc_ss=7a32e&oh=00_AfwLxTRQ_MJjKoCW-ndmnWkmf7KmdCH1-ArJk5Km0zatOg&oe=69C90231", alt: "Couleur homme vert" },
+              { src: "https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/634733566_1252410203649299_4082401052700506738_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=13d280&_nc_ohc=jUY4qi-qJw0Q7kNvwE7PzUm&_nc_oc=Ado7zsgNSYSNKSH0oATKyf52Wha1Gdv3tNZ0axehFUCHdLU8BzGcsXAj9DxT8XH-LhE&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=ySWKjBuFTtnkxA27_6vMqA&_nc_ss=7a32e&oh=00_AfxsGiJH8HW1hjrepJj6D_bBitc0Zy0vjwpZ1TAKLUfBvg&oe=69C8FCD5", alt: "Couleur homme blanc" },
+              { src: "https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/636837943_1252403223649997_307635693931759440_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=13d280&_nc_ohc=dA-x7nQaIfoQ7kNvwFEJSsb&_nc_oc=Adr1y1wap7TBqqgrLGZqoBTy57ZzpjWxjqnzybUgdEsSFoQu3rXABKeQ1Dz-WhkrM1g&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=TfI14xzwxWz8rjAR5l1sPw&_nc_ss=7a32e&oh=00_AfwLrpPbmWJxAljTRel9JmRUm5QuXylgPlw6OVYNKFc_Ag&oe=69C8F36A", alt: "Coupe enfant" },
+              { src: "https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/605038750_1210505134506473_5329453832858731132_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_ohc=DPchCwo3ioAQ7kNvwGrUQcy&_nc_oc=Adok-FfRYxMegCiEZ6yWVT3mJIyx-jOuLagP1M6TtbI10isGKle0qgDht-mlhGorufA&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=RoLwtKT6AG0HkL96oSrEDQ&_nc_ss=7a32e&oh=00_AfwwZv6gcreNsBWi4uFqrgzwJbO70PE74O2kmHoh5AhM7w&oe=69C8FC71", alt: "Coupe + couleur violet profil" },
+              { src: "https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/650968871_1272734894950163_347594449777480637_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=13d280&_nc_ohc=7RKDU_0-xvYQ7kNvwEy4BmG&_nc_oc=AdrO4xgbydqB8aCFCx5h9cdlaTsUhbyPuwxOg-1cX4e1E6yuhtZKwdiag5tfZ5TtBOk&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=uqOfKpUldCZJPq4L-JIa1Q&_nc_ss=7a32e&oh=00_AfzRnsi-iLR4ZGHMano13lBAj61YJ1RHblX_f_nIvqHRfg&oe=69C8FB3C", alt: "Rattrapage résultat" },
+              { src: "https://scontent.fppt1-1.fna.fbcdn.net/v/t39.30808-6/644554775_1261514442738875_3951513341373228882_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=13d280&_nc_ohc=yLsZFd33v7AQ7kNvwGABGC3&_nc_oc=AdpakozuxxIO9OdN9UKfJ_spvq13xXsR15zJZRiF3r85VH504AbbfBaJm0TZ6ijpBz8&_nc_zt=23&_nc_ht=scontent.fppt1-1.fna&_nc_gid=ySWKjBuFTtnkxA27_6vMqA&_nc_ss=7a32e&oh=00_AfxXDPbwmH_sTmOSBhU40eir0BvZxJ2b5DaWFlNEcYxjZg&oe=69C8FE8D", alt: "Couleur homme vert profil" },
+            ].map((img, i) => (
+              <AnimatedSection key={i} delay={i * 0.05}>
+                <div className="overflow-hidden aspect-square">
+                  <img src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
         </div>
       </section>
 
