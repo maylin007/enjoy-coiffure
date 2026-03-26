@@ -1,53 +1,21 @@
-import type { Metadata } from "next";
+"use client";
 import AnimatedSection from "@/components/AnimatedSection";
-
-export const metadata: Metadata = { title: "Services & Tarifs", description: "Coupes, colorations, mèches, lissage, transformations. Tarifs Enjoy Coiffure Tahiti." };
-
-interface Service { name: string; price: string; note?: string }
-interface Category { title: string; services: Service[] }
-
-const categories: Category[] = [
-  { title: "Coupes Femme", services: [
-    { name: "Coupe + brushing", price: "5 500" },
-    { name: "Coupe + séchage", price: "4 500" },
-    { name: "Brushing seul", price: "3 000" },
-    { name: "Coupe enfant (- 12 ans)", price: "2 500" },
-  ]},
-  { title: "Coupes Homme", services: [
-    { name: "Coupe homme", price: "2 800" },
-    { name: "Coupe + barbe", price: "3 500" },
-    { name: "Coupe dégradé", price: "3 000" },
-    { name: "Coupe enfant garçon", price: "2 000" },
-  ]},
-  { title: "Coloration", services: [
-    { name: "Coloration complète", price: "7 500" },
-    { name: "Coloration + coupe + brushing", price: "11 000" },
-    { name: "Retouche racines", price: "5 500" },
-    { name: "Couleur ton sur ton", price: "6 000" },
-  ]},
-  { title: "Mèches & Balayage", services: [
-    { name: "Mèches complètes", price: "9 500" },
-    { name: "Demi-tête de mèches", price: "7 000" },
-    { name: "Balayage", price: "8 500" },
-    { name: "Ombré hair", price: "10 000" },
-  ]},
-  { title: "Soins & Traitements", services: [
-    { name: "Soin profond", price: "3 500" },
-    { name: "Soin kératine", price: "12 000", note: "selon longueur" },
-    { name: "Lissage brésilien", price: "18 000", note: "selon longueur" },
-    { name: "Défrisage", price: "8 000" },
-  ]},
-];
+import { useLanguage } from "@/lib/LanguageContext";
+import { translations, t } from "@/lib/translations";
 
 export default function ServicesPage() {
+  const { lang } = useLanguage();
+  const s = translations.services;
+  const categories = s.categories[lang];
+
   return (
     <>
       <section className="pt-32 pb-20 px-6 bg-light">
         <div className="max-w-7xl mx-auto text-center">
           <AnimatedSection>
-            <p className="text-[11px] tracking-[0.3em] uppercase text-accent mb-4">Nos prestations</p>
-            <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-light text-dark mb-6">Services & Tarifs</h1>
-            <p className="text-muted text-base max-w-xl mx-auto font-light">Tous nos services sont disponibles sans rendez-vous dans nos 4 salons.</p>
+            <p className="text-[11px] tracking-[0.3em] uppercase text-accent mb-4">{t(s.tag, lang)}</p>
+            <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-light text-dark mb-6">{t(s.title, lang)}</h1>
+            <p className="text-muted text-base max-w-xl mx-auto font-light">{t(s.subtitle, lang)}</p>
           </AnimatedSection>
         </div>
       </section>
@@ -60,8 +28,8 @@ export default function ServicesPage() {
               <h2 className="font-[family-name:var(--font-display)] text-3xl font-light text-dark mb-8">{category.title}</h2>
 
               <div className="hidden sm:grid grid-cols-12 text-[11px] tracking-wider uppercase text-muted pb-4 border-b border-divider mb-1">
-                <div className="col-span-8">Prestation</div>
-                <div className="col-span-4 text-right">Tarif</div>
+                <div className="col-span-8">{t(s.tableService, lang)}</div>
+                <div className="col-span-4 text-right">{t(s.tablePrice, lang)}</div>
               </div>
 
               {category.services.map((service, i) => (
@@ -80,8 +48,8 @@ export default function ServicesPage() {
         ))}
 
         <div className="py-12 text-center">
-          <p className="text-muted text-sm mb-6">Tarifs indicatifs. Suppléments possibles selon longueur et épaisseur des cheveux.</p>
-          <a href="tel:+68940438070" className="inline-block bg-brand text-white px-8 py-4 text-[13px] tracking-wider uppercase transition-all duration-300 hover:bg-brand-dark">Appelez-nous — 40 43 80 70</a>
+          <p className="text-muted text-sm mb-6">{t(s.disclaimer, lang)}</p>
+          <a href="tel:+68940438070" className="inline-block bg-brand text-white px-8 py-4 text-[13px] tracking-wider uppercase transition-all duration-300 hover:bg-brand-dark">{t(s.callUs, lang)}</a>
         </div>
       </div>
     </>

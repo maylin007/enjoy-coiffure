@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
+"use client";
 import AnimatedSection from "@/components/AnimatedSection";
-
-export const metadata: Metadata = { title: "Contact", description: "Contactez Enjoy Coiffure. 4 salons à Tahiti, sans rendez-vous." };
+import { useLanguage } from "@/lib/LanguageContext";
+import { translations, t } from "@/lib/translations";
 
 const salons = [
   { name: "Papeete — Rue Gauguin", phone: "40 43 80 70", address: "Rue Gauguin, Papeete" },
@@ -11,14 +11,17 @@ const salons = [
 ];
 
 export default function ContactPage() {
+  const { lang } = useLanguage();
+  const c = translations.contact;
+
   return (
     <>
       <section className="pt-32 pb-20 px-6 bg-light">
         <div className="max-w-7xl mx-auto text-center">
           <AnimatedSection>
-            <p className="text-[11px] tracking-[0.3em] uppercase text-accent mb-4">Nous contacter</p>
-            <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-light text-dark mb-6">Appelez-nous</h1>
-            <p className="text-muted text-base max-w-xl mx-auto font-light">Tous nos salons sont sans rendez-vous. Passez directement.</p>
+            <p className="text-[11px] tracking-[0.3em] uppercase text-accent mb-4">{t(c.tag, lang)}</p>
+            <h1 className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl font-light text-dark mb-6">{t(c.title, lang)}</h1>
+            <p className="text-muted text-base max-w-xl mx-auto font-light">{t(c.subtitle, lang)}</p>
           </AnimatedSection>
         </div>
       </section>
@@ -32,7 +35,7 @@ export default function ContactPage() {
                   <h3 className="font-[family-name:var(--font-display)] text-xl font-light text-dark mb-4">{salon.name}</h3>
                   <p className="text-muted text-[15px] mb-2">{salon.address}</p>
                   <a href={`tel:+689${salon.phone.replace(/\s/g, "")}`} className="text-brand text-lg font-medium hover:text-brand-dark transition-colors block mb-4">{salon.phone}</a>
-                  <a href={`tel:+689${salon.phone.replace(/\s/g, "")}`} className="inline-block bg-brand text-white px-6 py-3 text-[13px] tracking-wider uppercase transition-all duration-300 hover:bg-brand-dark">Appeler</a>
+                  <a href={`tel:+689${salon.phone.replace(/\s/g, "")}`} className="inline-block bg-brand text-white px-6 py-3 text-[13px] tracking-wider uppercase transition-all duration-300 hover:bg-brand-dark">{t(c.call, lang)}</a>
                 </div>
               </AnimatedSection>
             ))}
@@ -40,7 +43,7 @@ export default function ContactPage() {
 
           <AnimatedSection>
             <div className="mt-16 text-center">
-              <p className="text-[11px] tracking-[0.3em] uppercase text-accent mb-4">Réseaux sociaux</p>
+              <p className="text-[11px] tracking-[0.3em] uppercase text-accent mb-4">{t(c.socialTag, lang)}</p>
               <div className="flex items-center justify-center gap-8">
                 <a href="https://www.facebook.com/enjoycoiffuretahiti/" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-brand transition-colors text-[15px]">Facebook</a>
                 <a href="https://www.instagram.com/enjoy_coiffure_tahiti/" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-brand transition-colors text-[15px]">Instagram</a>

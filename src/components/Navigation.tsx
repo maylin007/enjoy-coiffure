@@ -2,12 +2,15 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/lib/LanguageContext";
+import { translations, t } from "@/lib/translations";
+import LanguageToggle from "@/components/LanguageToggle";
 
-const links = [
-  { href: "/", label: "Accueil" },
-  { href: "/salons", label: "Nos Salons" },
-  { href: "/services", label: "Services & Tarifs" },
-  { href: "/contact", label: "Contact" },
+const linkKeys: { href: string; key: "home" | "salons" | "services" | "contact" }[] = [
+  { href: "/", key: "home" },
+  { href: "/salons", key: "salons" },
+  { href: "/services", key: "services" },
+  { href: "/contact", key: "contact" },
 ];
 
 export default function Navigation() {
@@ -15,6 +18,7 @@ export default function Navigation() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(!isHome);
+  const { lang } = useLanguage();
 
   useEffect(() => {
     if (!isHome) { setScrolled(true); return; }
@@ -30,23 +34,27 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex flex-col leading-tight">
             <span className={`font-[family-name:var(--font-display)] text-2xl font-light tracking-wide transition-colors duration-500 ${scrolled ? "text-brand" : "text-white"}`}>Enjoy Coiffure</span>
-            <span className={`text-[9px] tracking-[0.25em] uppercase transition-colors duration-500 ${scrolled ? "text-muted" : "text-white/60"}`}>4 salons à Tahiti</span>
+            <span className={`text-[9px] tracking-[0.25em] uppercase transition-colors duration-500 ${scrolled ? "text-muted" : "text-white/60"}`}>{t(translations.nav.subtitle, lang)}</span>
           </Link>
           <div className="hidden md:flex items-center gap-10">
-            {links.map((link) => (
-              <Link key={link.href} href={link.href} className={`text-[13px] tracking-wide uppercase transition-colors duration-300 ${scrolled ? (pathname === link.href ? "text-brand" : "text-dark hover:text-brand") : (pathname === link.href ? "text-white" : "text-white/70 hover:text-white")}`}>{link.label}</Link>
+            {linkKeys.map((link) => (
+              <Link key={link.href} href={link.href} className={`text-[13px] tracking-wide uppercase transition-colors duration-300 ${scrolled ? (pathname === link.href ? "text-brand" : "text-dark hover:text-brand") : (pathname === link.href ? "text-white" : "text-white/70 hover:text-white")}`}>{t(translations.nav[link.key], lang)}</Link>
             ))}
-            <a href="tel:+68940438070" className="text-[13px] tracking-wide uppercase border border-brand bg-brand text-white px-5 py-2.5 transition-all duration-300 hover:bg-brand-dark hover:border-brand-dark">Sans RDV</a>
+            <LanguageToggle scrolled={scrolled} />
+            <a href="tel:+68940438070" className="text-[13px] tracking-wide uppercase border border-brand bg-brand text-white px-5 py-2.5 transition-all duration-300 hover:bg-brand-dark hover:border-brand-dark">{t(translations.nav.noAppointment, lang)}</a>
           </div>
           <button onClick={() => setIsOpen(!isOpen)} className="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu" aria-expanded={isOpen}>
             {[0, 1, 2].map((i) => (<span key={i} className={`w-6 h-px transition-all duration-300 ${scrolled ? "bg-dark" : "bg-white"} ${isOpen && i === 0 ? "rotate-45 translate-y-[4px]" : isOpen && i === 1 ? "opacity-0" : isOpen && i === 2 ? "-rotate-45 -translate-y-[4px]" : ""}`} />))}
           </button>
         </div>
       </div>
-      <div className={`md:hidden overflow-hidden transition-all duration-300 bg-white ${isOpen ? "max-h-80" : "max-h-0"}`}>
+      <div className={`md:hidden overflow-hidden transition-all duration-300 bg-white ${isOpen ? "max-h-96" : "max-h-0"}`}>
         <div className="px-6 pb-6 pt-2 flex flex-col gap-1">
-          {links.map((link) => (<Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className={`text-[13px] tracking-wide uppercase py-3 border-b border-divider ${pathname === link.href ? "text-brand" : "text-dark"}`}>{link.label}</Link>))}
-          <a href="tel:+68940438070" className="mt-4 text-center text-[13px] tracking-wide uppercase border border-brand bg-brand text-white px-5 py-3">Sans rendez-vous — 40 43 80 70</a>
+          {linkKeys.map((link) => (<Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className={`text-[13px] tracking-wide uppercase py-3 border-b border-divider ${pathname === link.href ? "text-brand" : "text-dark"}`}>{t(translations.nav[link.key], lang)}</Link>))}
+          <div className="py-3 border-b border-divider">
+            <LanguageToggle scrolled={true} />
+          </div>
+          <a href="tel:+68940438070" className="mt-4 text-center text-[13px] tracking-wide uppercase border border-brand bg-brand text-white px-5 py-3">{lang === "fr" ? "Sans rendez-vous — 40 43 80 70" : "Walk-in — 40 43 80 70"}</a>
         </div>
       </div>
     </nav>

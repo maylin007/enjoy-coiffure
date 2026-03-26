@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PhoneButton from "@/components/PhoneButton";
+import { LanguageProvider } from "@/lib/LanguageContext";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const cormorant = Cormorant_Garamond({ variable: "--font-cormorant", subsets: ["latin"], weight: ["300", "400", "500", "600"] });
@@ -29,10 +30,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           "url": "https://enjoy-coiffure.vercel.app",
           "sameAs": ["https://www.facebook.com/enjoycoiffuretahiti/"]
         })}} />
-        <Navigation />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <PhoneButton />
+        <LanguageProvider>
+          <Navigation />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <PhoneButton />
+        </LanguageProvider>
       </body>
     </html>
   );
