@@ -38,7 +38,7 @@ export default function Navigation() {
             ))}
             <a href="tel:+68940438070" className="text-[13px] tracking-wide uppercase border border-brand bg-brand text-white px-5 py-2.5 transition-all duration-300 hover:bg-brand-dark hover:border-brand-dark">Sans RDV</a>
           </div>
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu">
+          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menu" aria-expanded={isOpen}>
             {[0, 1, 2].map((i) => (<span key={i} className={`w-6 h-px transition-all duration-300 ${scrolled ? "bg-dark" : "bg-white"} ${isOpen && i === 0 ? "rotate-45 translate-y-[4px]" : isOpen && i === 1 ? "opacity-0" : isOpen && i === 2 ? "-rotate-45 -translate-y-[4px]" : ""}`} />))}
           </button>
         </div>

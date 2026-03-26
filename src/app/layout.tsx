@@ -19,6 +19,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="fr" className={`${inter.variable} ${cormorant.variable}`}>
       <body className="min-h-screen flex flex-col">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "HairSalon",
+          "name": "Enjoy Coiffure",
+          "address": { "@type": "PostalAddress", "streetAddress": "Rue Gauguin", "addressLocality": "Papeete", "postalCode": "98713", "addressCountry": "PF" },
+          "telephone": "+68940438070",
+          "openingHours": ["Mo-Fr 08:00-17:00", "Sa 08:00-16:00"],
+          "url": "https://enjoy-coiffure.vercel.app",
+          "sameAs": ["https://www.facebook.com/enjoycoiffuretahiti/"]
+        })}} />
         <Navigation />
         <main className="flex-1">{children}</main>
         <Footer />

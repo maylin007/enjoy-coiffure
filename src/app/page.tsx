@@ -1,6 +1,5 @@
 import Link from "next/link";
 import AnimatedSection from "@/components/AnimatedSection";
-import Carousel from "@/components/Carousel";
 
 const salons = [
   { name: "Papeete — Rue Gauguin", phone: "40 43 80 70", hours: "Lun-Ven 8h-17h, Sam 8h-16h" },
