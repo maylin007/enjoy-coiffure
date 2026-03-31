@@ -2,6 +2,15 @@
 
 import { useState, useRef, useEffect } from "react";
 
+function formatMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/^[\-\*] (.+)/gm, "<li>$1</li>")
+    .replace(/(<li>[\s\S]*<\/li>)/, "<ul class='list-disc pl-4 my-1'>$1</ul>")
+    .replace(/\n/g, "<br/>")
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
@@ -108,7 +117,7 @@ export default function ChatWidget() {
                     : "bg-white border border-gray-200 text-gray-800"
                 }`}>
                   {m.content ? (
-                    <span dangerouslySetInnerHTML={{ __html: m.content.replace(/\n/g, "<br/>") }} />
+                    <span dangerouslySetInnerHTML={{ __html: formatMarkdown(m.content) }} />
                   ) : (isLoading && i === messages.length - 1 ? "..." : "")}
                 </div>
               </div>
