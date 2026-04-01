@@ -1,7 +1,4 @@
-import { createGroq } from "@ai-sdk/groq";
-import { streamText } from "ai";
-
-const groq = createGroq({ apiKey: process.env.GROQ_API_KEY });
+import { createChatRoute } from "@/lib/chat-route";
 
 const SYSTEM_PROMPT = `Tu es l'assistant virtuel d'Enjoy Coiffure à Tahiti. Tu réponds aux questions des clients de manière chaleureuse et professionnelle, en français ou en anglais selon la langue du client.
 
@@ -57,14 +54,4 @@ RÈGLES :
 - Tu peux utiliser 1 ou 2 emojis par message si c'est pertinent. Pas plus.
 - Rappelle que c'est SANS RENDEZ-VOUS quand c'est pertinent.`;
 
-export async function POST(req: Request) {
-  const { messages } = await req.json();
-
-  const result = streamText({
-    model: groq("llama-3.3-70b-versatile"),
-    system: SYSTEM_PROMPT,
-    messages,
-  });
-
-  return result.toTextStreamResponse();
-}
+export const POST = createChatRoute(SYSTEM_PROMPT);

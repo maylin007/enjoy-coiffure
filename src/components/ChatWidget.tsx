@@ -2,21 +2,34 @@
 
 import { useState, useRef, useEffect } from "react";
 
-function formatMarkdown(text: string): string {
-  return text
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/^[\-\*] (.+)/gm, "<li>$1</li>")
-    .replace(/(<li>[\s\S]*<\/li>)/, "<ul class='list-disc pl-4 my-1'>$1</ul>")
-    .replace(/\n/g, "<br/>")
+export interface ChatWidgetConfig {
+  brandName: string;
+  phone: string;
+  greeting?: string;
+  suggestedQuestions: string[];
+  errorMessage?: string;
+  position?: "left" | "right";
+  brandColor?: string;
+  apiEndpoint?: string;
 }
 
-export default function ChatWidget() {
+export default function ChatWidget({
+  brandName,
+  phone,
+  greeting = "Ia ora na ! Comment puis-je vous aider ?",
+  suggestedQuestions,
+  errorMessage,
+  position = "left",
+  brandColor,
+  apiEndpoint = "/api/chat",
+}: ChatWidgetConfig) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const fallbackError = errorMessage ?? `Désolé, une erreur est survenue. Appelez-nous au ${phone}.`;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -33,7 +46,7 @@ export default function ChatWidget() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("/api/chat", {
+      const res = await fetch(apiEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: newMessages }),
@@ -57,10 +70,15 @@ export default function ChatWidget() {
         }
       }
     } catch {
-      setMessages([...newMessages, { role: "assistant", content: "Désolé, une erreur est survenue. Appelez-nous au 40 42 66 42." }]);
+      setMessages([...newMessages, { role: "assistant", content: fallbackError }]);
     }
     setIsLoading(false);
   }
+
+  // Use CSS variable if brandColor starts with --, otherwise treat as hex/color value
+  const bgColor = brandColor?.startsWith("--") ? `var(${brandColor})` : brandColor;
+  const colorStyle = bgColor ? { backgroundColor: bgColor } : undefined;
+  const posClass = position === "right" ? "right-6" : "left-6";
 
   return (
     <>
@@ -68,7 +86,8 @@ export default function ChatWidget() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-brand text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 hover:bg-brand-dark"
+          className={`fixed bottom-6 ${posClass} z-50 w-14 h-14 bg-brand text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105 hover:bg-brand-dark`}
+          style={colorStyle}
           aria-label="Ouvrir le chat"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
@@ -79,11 +98,11 @@ export default function ChatWidget() {
 
       {/* Chat window */}
       {isOpen && (
-        <div className="fixed bottom-6 left-6 z-50 w-[340px] max-w-[calc(100vw-48px)] bg-white shadow-2xl flex flex-col overflow-hidden" style={{ height: "480px", borderRadius: 0 }}>
+        <div className={`fixed bottom-6 ${posClass} z-50 w-[340px] max-w-[calc(100vw-48px)] bg-white shadow-2xl flex flex-col overflow-hidden`} style={{ height: "480px", borderRadius: 0 }}>
           {/* Header */}
-          <div className="bg-brand px-4 py-3 flex items-center justify-between flex-shrink-0">
+          <div className="bg-brand px-4 py-3 flex items-center justify-between flex-shrink-0" style={colorStyle}>
             <div>
-              <p className="text-white text-sm font-semibold">Institut Leely</p>
+              <p className="text-white text-sm font-semibold">{brandName}</p>
               <p className="text-white/60 text-[11px]">Posez-nous vos questions</p>
             </div>
             <button onClick={() => setIsOpen(false)} className="text-white/60 hover:text-white transition-colors" aria-label="Fermer">
@@ -95,13 +114,13 @@ export default function ChatWidget() {
           <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 bg-gray-50">
             {messages.length === 0 && (
               <div className="text-center py-8">
-                <p className="text-muted text-sm">Ia ora na ! Comment puis-je vous aider ?</p>
+                <p className="text-gray-500 text-sm">{greeting}</p>
                 <div className="mt-4 space-y-2">
-                  {["Quels sont vos horaires ?", "Quels soins proposez-vous ?", "C'est où exactement ?"].map((q) => (
+                  {suggestedQuestions.map((q) => (
                     <button
                       key={q}
-                      onClick={() => { setInput(q); }}
-                      className="block w-full text-left text-xs px-3 py-2 bg-white border border-gray-200 text-gray-700 hover:border-brand/30 transition-colors"
+                      onClick={() => setInput(q)}
+                      className="block w-full text-left text-xs px-3 py-2 bg-white border border-gray-200 text-gray-700 hover:border-gray-400 transition-colors"
                     >
                       {q}
                     </button>
@@ -111,13 +130,16 @@ export default function ChatWidget() {
             )}
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-[80%] px-3 py-2 text-sm leading-relaxed ${
-                  m.role === "user"
-                    ? "bg-brand text-white"
-                    : "bg-white border border-gray-200 text-gray-800"
-                }`}>
+                <div
+                  className={`max-w-[80%] px-3 py-2 text-sm leading-relaxed ${
+                    m.role === "user"
+                      ? "bg-brand text-white"
+                      : "bg-white border border-gray-200 text-gray-800"
+                  }`}
+                  style={m.role === "user" ? colorStyle : undefined}
+                >
                   {m.content ? (
-                    <span dangerouslySetInnerHTML={{ __html: formatMarkdown(m.content) }} />
+                    <span className="whitespace-pre-wrap">{m.content}</span>
                   ) : (isLoading && i === messages.length - 1 ? "..." : "")}
                 </div>
               </div>
@@ -133,13 +155,14 @@ export default function ChatWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Votre question..."
-                className="flex-1 text-sm px-3 py-2 border border-gray-200 outline-none focus:border-brand/50 bg-gray-50 text-gray-800"
+                className="flex-1 text-sm px-3 py-2 border border-gray-200 outline-none focus:border-gray-400 bg-gray-50 text-gray-800"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
                 className="bg-brand text-white px-3 py-2 text-sm disabled:opacity-40 hover:bg-brand-dark transition-colors"
+                style={colorStyle}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg>
               </button>

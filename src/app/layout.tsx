@@ -44,7 +44,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main className="flex-1">{children}</main>
           <Footer />
           <PhoneButton />
-          <ChatWidget />
+          <ChatWidget
+            brandName="Enjoy Coiffure"
+            phone="40 43 80 70"
+            suggestedQuestions={["Quels sont vos horaires ?", "Quels sont vos tarifs ?", "Où sont vos salons ?"]}
+          />
         </LanguageProvider>
       </body>
     </html>
